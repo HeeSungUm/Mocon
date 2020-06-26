@@ -1,6 +1,7 @@
 package com.appplepie.mocon.ui.notifications;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.appplepie.mocon.R;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class NotificationsFragment extends Fragment {
 
@@ -28,6 +31,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+                Log.e(TAG, "onChanged: asd" );
             }
         });
         return root;
