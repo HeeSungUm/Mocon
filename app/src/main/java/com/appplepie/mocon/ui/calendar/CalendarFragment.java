@@ -38,6 +38,9 @@ public class CalendarFragment extends Fragment {
         calendarView.setForwardButtonImage(ResourcesCompat.getDrawable(resources ,R.drawable.ic_baseline_navigate_next_24, null));
         calendarView.setPreviousButtonImage(ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_navigate_before_24, null));
 
+
+
+
         return root;
     }
 }

@@ -12,6 +12,8 @@ public class CalendarViewModel extends ViewModel {
         mText.setValue("This is Calendar ");
     }
 
+
+
     public LiveData<String> getText() {
         return mText;
     }

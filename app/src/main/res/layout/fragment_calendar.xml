@@ -14,7 +14,8 @@
         app:headerColor="#fff"
         app:headerLabelColor="#000"
         app:eventsEnabled="true"
-        app:type="one_day_picker" />
+        app:type="one_day_picker"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
