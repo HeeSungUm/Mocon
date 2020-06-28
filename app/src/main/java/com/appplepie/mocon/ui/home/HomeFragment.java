@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -16,16 +15,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appplepie.mocon.R;
 import com.appplepie.mocon.ui.calendar.CalendarRemainderRecyclerAdapter;
-import com.appplepie.mocon.ui.calendar.CalendarRemainderRecyclerItem;
+import com.appplepie.mocon.TodoItem;
 
 import java.util.ArrayList;
 
@@ -33,7 +29,7 @@ public class HomeFragment extends Fragment {
     TextView ssidTv;
     WifiManager wifiManager;
     String ssid;
-    ArrayList<CalendarRemainderRecyclerItem> calendarItemArrayList = new ArrayList<>();
+    ArrayList<TodoItem> calendarItemArrayList = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //와이파이 상태변화 수신
@@ -42,7 +38,7 @@ public class HomeFragment extends Fragment {
         ssidTv = root.findViewById(R.id.homeWifiTv);
         RecyclerView recyclerView = root.findViewById(R.id.homeTodoRecycler);
         CalendarRemainderRecyclerAdapter adapter = new CalendarRemainderRecyclerAdapter(calendarItemArrayList);
-        CalendarRemainderRecyclerItem item = new CalendarRemainderRecyclerItem("안녕","하세요");
+        TodoItem item = new TodoItem("안녕","하세요");
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);

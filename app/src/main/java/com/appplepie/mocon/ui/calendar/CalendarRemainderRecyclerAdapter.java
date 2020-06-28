@@ -10,14 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appplepie.mocon.R;
+import com.appplepie.mocon.TodoItem;
 
 import java.util.ArrayList;
 
 public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<CalendarRemainderRecyclerAdapter.ItemViewHolder>{
 
-    ArrayList<CalendarRemainderRecyclerItem> itemArrayList;
+    ArrayList<TodoItem> itemArrayList;
 
-    public CalendarRemainderRecyclerAdapter(ArrayList<CalendarRemainderRecyclerItem> itemArray) {
+    public CalendarRemainderRecyclerAdapter(ArrayList<TodoItem> itemArray) {
         this.itemArrayList = itemArray;
     }
 
@@ -34,7 +35,7 @@ public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<Calen
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        holder.heading_TextView.setText(itemArrayList.get(position).getHeading());
+        holder.heading_TextView.setText(itemArrayList.get(position).getTitle());
         holder.desc_TextView.setText(itemArrayList.get(position).getDesc());
     }
 

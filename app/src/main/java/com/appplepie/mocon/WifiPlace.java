@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class WifiPlace {
-    public int id;
-    public ArrayList<ToDos> toDos;
+    public ArrayList<TodoItem> todoItems;
     public String place;
     public Set<String> wifi;
 
@@ -20,6 +19,22 @@ public class WifiPlace {
 
     public WifiPlace(String place, Set<String> wifi) {
         this.place = place;
+        this.wifi = wifi;
+    }
+
+    public ArrayList<TodoItem> getTodoItems() {
+        return todoItems;
+    }
+
+    public void setTodoItems(ArrayList<TodoItem> todoItems) {
+        this.todoItems = todoItems;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setWifi(Set<String> wifi) {
         this.wifi = wifi;
     }
 }

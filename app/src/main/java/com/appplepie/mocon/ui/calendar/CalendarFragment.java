@@ -10,29 +10,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.appplepie.mocon.R;
+import com.appplepie.mocon.TodoItem;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 
 public class CalendarFragment extends Fragment {
     CalendarView calendarView;
     RecyclerView recyclerView;
     TextView emptyTextView;
-    private ArrayList<CalendarRemainderRecyclerItem> calendarItemArrayList = new ArrayList<>();
+    private ArrayList<TodoItem> calendarItemArrayList = new ArrayList<>();
     private CalendarRemainderRecyclerAdapter recyclerAdapter;
 
     @Override
@@ -62,7 +59,7 @@ public class CalendarFragment extends Fragment {
 //                manager.getOrientation());
 //        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        CalendarRemainderRecyclerItem item = new CalendarRemainderRecyclerItem("안녕","하세요");
+        TodoItem item = new TodoItem("안녕","하세요");
         calendarItemArrayList.add(item);
         calendarItemArrayList.add(item);
         calendarItemArrayList.add(item);
