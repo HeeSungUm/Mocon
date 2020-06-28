@@ -5,6 +5,7 @@ import android.widget.CheckBox;
 public class CalendarRemainderRecyclerItem {
     private String heading;
     private String desc;
+    private boolean isChecked;
 
     public CalendarRemainderRecyclerItem(String heading, String desc) {
         this.heading = heading;
@@ -25,5 +26,13 @@ public class CalendarRemainderRecyclerItem {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

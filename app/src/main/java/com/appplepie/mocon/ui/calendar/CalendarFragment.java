@@ -45,7 +45,6 @@ public class CalendarFragment extends Fragment {
         recyclerView = root.findViewById(R.id.calendarRecyclerView);
         calendarView = root.findViewById(R.id.calendarView);
         emptyTextView = root.findViewById(R.id.emptyTextView);
-        testButton = root.findViewById(R.id.testBtn);
 
         Resources resources = getResources();
         calendarView.setForwardButtonImage(ResourcesCompat.getDrawable(resources ,R.drawable.ic_baseline_navigate_next_24, null));
@@ -78,7 +77,6 @@ public class CalendarFragment extends Fragment {
         calendarItemArrayList.add(item);
         recyclerAdapter.notifyDataSetChanged();
 
-        //
 
 
         return root;
