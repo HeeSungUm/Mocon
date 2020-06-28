@@ -78,6 +78,7 @@ public class CalendarFragment extends Fragment {
         calendarItemArrayList.add(item);
         recyclerAdapter.notifyDataSetChanged();
 
+        //
 
 
         return root;
