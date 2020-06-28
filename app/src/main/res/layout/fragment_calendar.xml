@@ -16,18 +16,6 @@
         <com.applandeo.materialcalendarview.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-<<<<<<< HEAD
-            android:layout_height="wrap_content">
-            <com.applandeo.materialcalendarview.CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:headerColor="#fff"
-                app:headerLabelColor="#000"
-                app:eventsEnabled="true"
-                app:type="one_day_picker"
-                app:selectionColor="@color/colorPrimary" />
-=======
             android:layout_height="wrap_content"
             app:headerColor="#fff"
             app:headerLabelColor="#000"
@@ -35,10 +23,7 @@
             app:type="one_day_picker"
             app:selectionColor="@color/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/calendarRecyclerView"
-            />
-
->>>>>>> dev
+            app:layout_constraintBottom_toTopOf="@id/calendarRecyclerView"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/calendarRecyclerView"
                 android:layout_width="match_parent"

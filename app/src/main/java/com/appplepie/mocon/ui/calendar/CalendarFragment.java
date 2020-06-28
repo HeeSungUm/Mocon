@@ -22,11 +22,7 @@ import android.view.ViewGroup;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.appplepie.mocon.R;
 
-<<<<<<< HEAD
-import java.util.Calendar;
-=======
 import java.util.ArrayList;
->>>>>>> dev
 
 
 public class CalendarFragment extends Fragment {
