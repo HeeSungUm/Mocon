@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/calendar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.calendar.CalendarFragment"
+    android:fillViewport="true"
     android:background="#fff">
-    <ScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content">
+
+        <com.applandeo.materialcalendarview.CalendarView
+            android:id="@+id/calendarView"
             android:layout_width="match_parent"
+<<<<<<< HEAD
             android:layout_height="wrap_content">
             <com.applandeo.materialcalendarview.CalendarView
                 android:id="@+id/calendarView"
@@ -22,15 +27,28 @@
                 app:eventsEnabled="true"
                 app:type="one_day_picker"
                 app:selectionColor="@color/colorPrimary" />
+=======
+            android:layout_height="wrap_content"
+            app:headerColor="#fff"
+            app:headerLabelColor="#000"
+            app:eventsEnabled="true"
+            app:type="one_day_picker"
+            app:selectionColor="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/calendarRecyclerView"
+            />
+
+>>>>>>> dev
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/calendarRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/calendarView"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/calendarView"
+                tools:listitem="@layout/calender_reminder_item"
+                android:layout_marginBottom="10dp"
+                />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </ScrollView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
