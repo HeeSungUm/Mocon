@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <CheckBox
         android:layout_width="46dp"
         android:layout_height="46dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
+        app:layout_constraintRight_toLeftOf="@id/calendar_remind_heading"
+
         android:button="@null"
         android:background="?android:attr/listChoiceIndicatorMultiple"
         android:id="@+id/calendar_remind_checkbox"
@@ -19,8 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/calendar_remind_desc"
         tools:text="테스트 텍스트 입니다."
-        android:layout_marginTop="21dp"
         android:textSize="24sp"
         android:textColor="#000"
         app:layout_constraintLeft_toRightOf="@id/calendar_remind_checkbox"
@@ -31,6 +33,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/calendar_remind_heading"
         app:layout_constraintTop_toBottomOf="@id/calendar_remind_heading"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="테스트 텍스트 입니다."
         android:textSize="18sp"/>
 
