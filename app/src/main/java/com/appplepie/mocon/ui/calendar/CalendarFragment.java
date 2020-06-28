@@ -32,8 +32,6 @@ public class CalendarFragment extends Fragment {
     CalendarView calendarView;
     RecyclerView recyclerView;
     TextView emptyTextView;
-    Button testButton;
-
     private ArrayList<CalendarRemainderRecyclerItem> calendarItemArrayList = new ArrayList<>();
     private CalendarRemainderRecyclerAdapter recyclerAdapter;
 
@@ -45,7 +43,6 @@ public class CalendarFragment extends Fragment {
         recyclerView = root.findViewById(R.id.calendarRecyclerView);
         calendarView = root.findViewById(R.id.calendarView);
         emptyTextView = root.findViewById(R.id.emptyTextView);
-        testButton = root.findViewById(R.id.testBtn);
 
 
         Resources resources = getResources();
@@ -53,11 +50,6 @@ public class CalendarFragment extends Fragment {
         calendarView.setPreviousButtonImage(ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_navigate_before_24, null));
         calendarView.setOnDayClickListener(eventDay -> {
 
-        });
-
-        testButton.setOnClickListener(view -> {
-            Log.e("Calender",""+calendarView.getSelectedDate().get(Calendar.MONTH)+"월"
-                    +calendarView.getSelectedDate().get(Calendar.DAY_OF_MONTH));
         });
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
