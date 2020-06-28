@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.appplepie.mocon.R;
 
+import java.util.Calendar;
+
 
 public class CalendarFragment extends Fragment {
     CalendarView calendarView;
@@ -30,6 +32,7 @@ public class CalendarFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_calendar, container, false);
         recyclerView = root.findViewById(R.id.calendarRecyclerView);
         calendarView = root.findViewById(R.id.calendarView);
+
 
         Resources resources = getResources();
         calendarView.setForwardButtonImage(ResourcesCompat.getDrawable(resources ,R.drawable.ic_baseline_navigate_next_24, null));
