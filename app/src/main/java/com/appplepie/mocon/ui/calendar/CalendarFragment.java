@@ -66,9 +66,9 @@ public class CalendarFragment extends Fragment {
         recyclerAdapter =new CalendarRemainderRecyclerAdapter(calendarItemArrayList);
         recyclerView.setAdapter(recyclerAdapter);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                manager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+//                manager.getOrientation());
+//        recyclerView.addItemDecoration(dividerItemDecoration);
 
         CalendarRemainderRecyclerItem item = new CalendarRemainderRecyclerItem("안녕","하세요");
         calendarItemArrayList.add(item);

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     tools:context=".ui.calendar.CalendarFragment"
     android:fillViewport="true"
-    android:background="#fff">
+    android:background="#fAfBff">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
