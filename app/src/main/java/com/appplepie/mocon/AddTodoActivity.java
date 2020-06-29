@@ -23,6 +23,7 @@ public class AddTodoActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 intent.putExtra("desc", descEt.getText().toString());
                 intent.putExtra("place", placeEt.getText().toString());
+                ;
             }
             else{
                 descEt.setError("메모를 입력해주세요");

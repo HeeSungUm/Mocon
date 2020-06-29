@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,11 +34,16 @@ public class HomeFragment extends Fragment {
     ImageButton addTodo;
     WifiManager wifiManager;
     String ssid;
-    ArrayList<TodoItem> calendarItemArrayList = new ArrayList<>();
+    ArrayList<TodoItem> todoItems = new ArrayList<>();
+    CalendarRemainderRecyclerAdapter adapter;
 
     @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String place = data.getStringExtra("place");
+        todoItems.add(new TodoItem(data.getStringExtra("desc"), place));
+        adapter.notifyDataSetChanged();
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,26 +54,26 @@ public class HomeFragment extends Fragment {
         addTodo = root.findViewById(R.id.homeAddTodo);
         ssidTv = root.findViewById(R.id.homeWifiTv);
         RecyclerView recyclerView = root.findViewById(R.id.homeTodoRecycler);
-        CalendarRemainderRecyclerAdapter adapter = new CalendarRemainderRecyclerAdapter(calendarItemArrayList);
+        adapter = new CalendarRemainderRecyclerAdapter(todoItems);
         TodoItem item = new TodoItem("안녕","하세요");
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         getContext().registerReceiver(mReceiver, filter);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
+        todoItems.add(item);
+        todoItems.add(item);
+        todoItems.add(item);
+        todoItems.add(item);
+        todoItems.add(item);
+        todoItems.add(item);
+        todoItems.add(item);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         addTodo.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AddTodoActivity.class);
-            getContext().startActivity(intent);
+            getActivity().startActivityForResult(intent, 111);
         });
 
         return root;
