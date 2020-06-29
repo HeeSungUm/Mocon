@@ -20,19 +20,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.TextView;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 public class WifiSetting extends AppCompatActivity {
@@ -88,7 +82,8 @@ public class WifiSetting extends AppCompatActivity {
                 Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
                 ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
                 wifiPlaces.add(new WifiPlace(place, wifi));
-
+                String jsonText = gson.toJson(wifiList);
+                editor.putString("WifiPlaceList", jsonText);
                 editor.apply();
                 finish();
             }

@@ -43,7 +43,6 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         String place = data.getStringExtra("place");
         todoItems.add(new TodoItem(data.getStringExtra("desc"), place));
-        Log.e("TAG", "onActivityResult: asd" );
         adapter.notifyDataSetChanged();
 
     }
