@@ -62,14 +62,25 @@
         app:layout_constraintBottom_toBottomOf="@id/homeWifiApartImage"
         app:layout_constraintLeft_toLeftOf="@id/homeWifiTv"/>
     <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/homeWifiApartImage"
         android:layout_marginTop="32dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/homeTodoRecycler"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/homeTodoRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <View
+                app:layout_constraintTop_toBottomOf="@id/homeTodoRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="168dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.core.widget.NestedScrollView>

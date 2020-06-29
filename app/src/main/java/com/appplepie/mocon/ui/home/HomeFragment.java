@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment {
         calendarItemArrayList.add(item);
         calendarItemArrayList.add(item);
         calendarItemArrayList.add(item);
+        calendarItemArrayList.add(item);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
