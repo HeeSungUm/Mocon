@@ -42,7 +42,8 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String place = data.getStringExtra("place");
-        todoItems.add(new TodoItem(data.getStringExtra("desc"), place));
+        String desc = data.getStringExtra("desc");
+        todoItems.add(new TodoItem(desc, place));
         Log.e("TAG", "onActivityResult: asd" );
         adapter.notifyDataSetChanged();
 
