@@ -10,6 +10,12 @@ public class WifiPlace {
     public String place;
     public ArrayList<String> wifi;
 
+    public WifiPlace(ArrayList<TodoItem> todoItems, String place, ArrayList<String> wifi) {
+        this.todoItems = todoItems;
+        this.place = place;
+        this.wifi = wifi;
+    }
+
     public String getPlace() {
         return place;
     }

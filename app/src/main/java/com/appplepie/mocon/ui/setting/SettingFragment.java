@@ -39,6 +39,7 @@ public class SettingFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,17 +49,24 @@ public class SettingFragment extends Fragment {
         addWifiPlace = root.findViewById(R.id.settingAddWifiPlace);
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
+
         Gson gson = new Gson();
         String json = preferences.getString("WifiPlaceList", "");
         Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
         ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("wifi");
+
+        wifiPlaces.add(new WifiPlace("집", arrayList));
+
+        Log.e(TAG, "onCreateView: entered "+wifiPlaces );
         WifiListRecyclerAdapter adapter = new WifiListRecyclerAdapter(wifiPlaces);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         addWifiPlace.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), WifiSetting.class);
-            this.startActivityForResult(intent, 1111);
+            getContext().startActivity(intent);
         });
 
         return root;

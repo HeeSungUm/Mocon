@@ -1,11 +1,17 @@
 package com.appplepie.mocon;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.appplepie.mocon.ui.calendar.CalendarRemainderRecyclerAdapter;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -19,12 +25,15 @@ public class WifiListRecyclerAdapter  extends RecyclerView.Adapter<WifiListRecyc
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.wifi_place_list_item, parent, false);
+        return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-
+        holder.title.setText(wifiPlaceArrayList.get(position).place);
+        holder.wifis.setText(wifiPlaceArrayList.get(position).wifi.toString());
     }
 
     @Override
@@ -35,10 +44,13 @@ public class WifiListRecyclerAdapter  extends RecyclerView.Adapter<WifiListRecyc
         return wifiPlaceArrayList.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder{
-
+    static class ItemViewHolder extends RecyclerView.ViewHolder{
+        TextView title;
+        TextView wifis;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.wifiListItemTitle);
+            wifis = itemView.findViewById(R.id.wifiListItemWifis);
         }
     }
 }

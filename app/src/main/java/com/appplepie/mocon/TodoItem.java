@@ -1,9 +1,17 @@
 package com.appplepie.mocon;
 
 public class TodoItem {
-    private String Title;
+    private String title;
     private String desc;
-    private String time;
+    private String time = "";
+    private String date = "";
+
+    public TodoItem(String title, String desc, String time, String date) {
+        this.title = title;
+        this.desc = desc;
+        this.time = time;
+        this.date = date;
+    }
 
     public String getTime() {
         return time;
@@ -13,17 +21,25 @@ public class TodoItem {
         this.time = time;
     }
 
-    public TodoItem(String heading, String desc) {
-        this.Title = heading;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public TodoItem(String title, String desc) {
+        this.title = title;
         this.desc = desc;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
-    public void setTitle(String Title) {
-        this.Title = Title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDesc() {

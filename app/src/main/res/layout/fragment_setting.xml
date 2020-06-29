@@ -18,7 +18,7 @@
                 android:id="@+id/settingTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="와이파이 설정"
+                android:text="장소 목록"
                 android:fontFamily="@font/nanum_square_aceb"
                 android:textSize="36sp"
                 android:layout_marginTop="24dp"
