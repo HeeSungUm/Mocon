@@ -5,22 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
-    android:background="#FAFBFF">
+    android:background="#FFFFFF">
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/homeAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         >
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="나의 계획"
-            android:fontFamily="@font/nanum_square_aceb"
-            android:textSize="36sp"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="16dp"
-            android:textColor="@color/material_on_surface_emphasis_high_type"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/homeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나의 계획"
+                android:fontFamily="@font/nanum_square_aceb"
+                android:textSize="36sp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/material_on_surface_emphasis_high_type"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <ImageButton
+                android:id="@+id/homeAddTodo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/homeTitle"
+                app:layout_constraintBottom_toBottomOf="@id/homeTitle"
+                android:src="@drawable/ic_baseline_add_36"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="16dp"
+                android:background="#FFF"
+                android:tint="#000"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.MaterialToolbar>
     <ImageView
         android:id="@+id/homeWifiImage"

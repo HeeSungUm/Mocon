@@ -1,23 +1,24 @@
 package com.appplepie.mocon;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Set;
 
 public class WifiPlace {
     public ArrayList<TodoItem> todoItems;
     public String place;
-    public Set<String> wifi;
+    public ArrayList<String> wifi;
 
     public String getPlace() {
         return place;
     }
 
-    public Set<String> getWifi() {
+    public ArrayList<String> getWifi() {
         return wifi;
     }
 
-    public WifiPlace(String place, Set<String> wifi) {
+    public WifiPlace(String place, ArrayList<String> wifi) {
         this.place = place;
         this.wifi = wifi;
     }
@@ -34,7 +35,7 @@ public class WifiPlace {
         this.place = place;
     }
 
-    public void setWifi(Set<String> wifi) {
+    public void setWifi(ArrayList<String> wifi) {
         this.wifi = wifi;
     }
 }

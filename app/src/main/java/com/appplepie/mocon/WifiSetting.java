@@ -25,7 +25,11 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -77,9 +81,14 @@ public class WifiSetting extends AppCompatActivity {
                 editText.setError("빈칸을 다 채워주세요");
             } else {
                 String place = editText.getText().toString();
-                String[] wifi = spinner.getText().toString().split(",");
-                Log.e("tag", "onCreate: " + Arrays.toString(wifi));
-                editor.putStringSet(place, new HashSet<>(Arrays.asList(wifi)));
+                ArrayList<String> wifi = new ArrayList<>(Arrays.asList(spinner.getText().toString().split(",")));
+
+                Gson gson = new Gson();
+                String json = preferences.getString("WifiPlaceList", "");
+                Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
+                ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
+                wifiPlaces.add(new WifiPlace(place, wifi));
+
                 editor.apply();
                 finish();
             }
