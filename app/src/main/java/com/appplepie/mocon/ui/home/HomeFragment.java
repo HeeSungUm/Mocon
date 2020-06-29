@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment {
         String place = data.getStringExtra("place");
         String desc = data.getStringExtra("desc");
         todoItems.add(new TodoItem(desc, place));
-        Log.e("TAG", "onActivityResult: asd" );
         adapter.notifyDataSetChanged();
 
     }
