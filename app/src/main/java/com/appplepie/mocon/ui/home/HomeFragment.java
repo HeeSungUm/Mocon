@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment {
     ImageButton addTodo;
     WifiManager wifiManager;
     String ssid;
-    ArrayList<TodoItem> todoItems = new ArrayList<>();
+    public static ArrayList<TodoItem> todoItems = new ArrayList<>();
     CalendarRemainderRecyclerAdapter adapter;
 
     @Override
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         String place = data.getStringExtra("place");
         todoItems.add(new TodoItem(data.getStringExtra("desc"), place));
+        Log.e("TAG", "onActivityResult: asd" );
         adapter.notifyDataSetChanged();
 
     }
@@ -55,25 +57,17 @@ public class HomeFragment extends Fragment {
         ssidTv = root.findViewById(R.id.homeWifiTv);
         RecyclerView recyclerView = root.findViewById(R.id.homeTodoRecycler);
         adapter = new CalendarRemainderRecyclerAdapter(todoItems);
-        TodoItem item = new TodoItem("안녕","하세요");
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         getContext().registerReceiver(mReceiver, filter);
-        todoItems.add(item);
-        todoItems.add(item);
-        todoItems.add(item);
-        todoItems.add(item);
-        todoItems.add(item);
-        todoItems.add(item);
-        todoItems.add(item);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         addTodo.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AddTodoActivity.class);
-            getActivity().startActivityForResult(intent, 111);
+            this.startActivityForResult(intent, 111);
         });
 
         return root;
@@ -84,10 +78,13 @@ public class HomeFragment extends Fragment {
             if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals (intent.getAction())){
                 NetworkInfo netInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (ConnectivityManager.TYPE_WIFI == netInfo.getType()){
-                    wifiManager = (WifiManager) getContext().getSystemService(getContext().WIFI_SERVICE);
-                    WifiInfo wifiinfo = wifiManager.getConnectionInfo();
-                    ssid = wifiinfo.getSSID();
-                    ssidTv.setText(ssid);
+                    if (getContext().getSystemService(getContext().WIFI_SERVICE) != null){
+                        wifiManager = (WifiManager) getContext().getSystemService(getContext().WIFI_SERVICE);
+                        WifiInfo wifiinfo = wifiManager.getConnectionInfo();
+                        ssid = wifiinfo.getSSID();
+                        ssidTv.setText(ssid);
+                    }
+
                 }
 
             }

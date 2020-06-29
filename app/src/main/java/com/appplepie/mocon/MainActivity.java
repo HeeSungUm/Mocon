@@ -23,6 +23,7 @@ import android.widget.MultiAutoCompleteTextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -39,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
     final String CoarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION;
     final String AccessWifi = Manifest.permission.ACCESS_WIFI_STATE;
     final String ChangeWifi = Manifest.permission.CHANGE_WIFI_STATE;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("Main", "onActivityResult: Main" );
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (preferences.getBoolean("FirstStart", true)){
-            preferences.edit().putBoolean("FirstStart", false).apply();
+            editor.putBoolean("FirstStart", false).apply();
             Intent intent = new Intent(this, WifiSetting.class);
             startActivity(intent);
         }

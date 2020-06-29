@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.appplepie.mocon.R;
 import com.appplepie.mocon.TodoItem;
+import com.appplepie.mocon.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -29,7 +31,6 @@ public class CalendarFragment extends Fragment {
     CalendarView calendarView;
     RecyclerView recyclerView;
     TextView emptyTextView;
-    private ArrayList<TodoItem> calendarItemArrayList = new ArrayList<>();
     private CalendarRemainderRecyclerAdapter recyclerAdapter;
 
     @Override
@@ -52,20 +53,13 @@ public class CalendarFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
 
-        recyclerAdapter =new CalendarRemainderRecyclerAdapter(calendarItemArrayList);
+        recyclerAdapter =new CalendarRemainderRecyclerAdapter(HomeFragment.todoItems);
         recyclerView.setAdapter(recyclerAdapter);
 
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
 //                manager.getOrientation());
 //        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        TodoItem item = new TodoItem("안녕","하세요");
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
-        calendarItemArrayList.add(item);
         recyclerAdapter.notifyDataSetChanged();
 
 
