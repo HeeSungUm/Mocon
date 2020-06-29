@@ -81,8 +81,15 @@ public class WifiSetting extends AppCompatActivity {
                 String json = preferences.getString("WifiPlaceList", "");
                 Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
                 ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
-                wifiPlaces.add(new WifiPlace(place, wifi));
-                String jsonText = gson.toJson(wifiList);
+                if (wifiPlaces!=null){
+                    wifiPlaces.add(new WifiPlace(place, wifi));
+                    String jsonText = gson.toJson(wifiPlaces);
+                    editor.putString("WifiPlaceList", jsonText);
+                    editor.apply();
+                }
+                ArrayList<WifiPlace> wifiPlaces1 = new ArrayList<>();
+                wifiPlaces1.add(new WifiPlace(place, wifi));
+                String jsonText = gson.toJson(wifiPlaces1);
                 editor.putString("WifiPlaceList", jsonText);
                 editor.apply();
                 finish();
