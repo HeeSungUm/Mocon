@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fAfBff"
+    android:background="#fff"
     android:fillViewport="true"
     tools:context=".ui.calendar.CalendarFragment">
 
@@ -54,6 +54,7 @@
 
 
         <com.applandeo.materialcalendarview.CalendarView
+            android:layout_marginTop="16dp"
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

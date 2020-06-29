@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appplepie.mocon.AddTodoActivity;
 import com.appplepie.mocon.R;
 import com.appplepie.mocon.ui.calendar.CalendarRemainderRecyclerAdapter;
 import com.appplepie.mocon.TodoItem;
@@ -27,14 +30,22 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     TextView ssidTv;
+    ImageButton addTodo;
     WifiManager wifiManager;
     String ssid;
     ArrayList<TodoItem> calendarItemArrayList = new ArrayList<>();
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //와이파이 상태변화 수신
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        addTodo = root.findViewById(R.id.homeAddTodo);
         ssidTv = root.findViewById(R.id.homeWifiTv);
         RecyclerView recyclerView = root.findViewById(R.id.homeTodoRecycler);
         CalendarRemainderRecyclerAdapter adapter = new CalendarRemainderRecyclerAdapter(calendarItemArrayList);
@@ -54,7 +65,10 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
+        addTodo.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), AddTodoActivity.class);
+            getContext().startActivity(intent);
+        });
 
         return root;
     }

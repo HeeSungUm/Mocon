@@ -3,6 +3,15 @@ package com.appplepie.mocon;
 public class TodoItem {
     private String Title;
     private String desc;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public TodoItem(String heading, String desc) {
         this.Title = heading;
