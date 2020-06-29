@@ -29,6 +29,9 @@ public class WifiListRecyclerAdapter  extends RecyclerView.Adapter<WifiListRecyc
 
     @Override
     public int getItemCount() {
+        if (wifiPlaceArrayList == null){
+            return 0;
+        }
         return wifiPlaceArrayList.size();
     }
 
