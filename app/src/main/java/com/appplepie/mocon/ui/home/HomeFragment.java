@@ -43,7 +43,20 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         String place = data.getStringExtra("place");
         String desc = data.getStringExtra("desc");
-        todoItems.add(new TodoItem(desc, place));
+        String date = data.getStringExtra("date");
+        String time = data.getStringExtra("time");
+        TodoItem todoItem = new TodoItem(desc, place);
+        if (!date.equals("") && time.equals("")){
+            todoItem.setDate(date);
+        }
+        else if(date.equals("")){
+
+        }
+        else {
+            todoItem.setDate(date);
+            todoItem.setTime(time);
+        }
+        todoItems.add(todoItem);
         adapter.notifyDataSetChanged();
 
     }
