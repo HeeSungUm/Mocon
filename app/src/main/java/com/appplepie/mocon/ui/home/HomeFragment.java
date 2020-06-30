@@ -57,6 +57,9 @@ public class HomeFragment extends Fragment {
             todoItem.setTime(time);
         }
         todoItems.add(todoItem);
+        //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+//                manager.getOrientation());
+//        recyclerView.addItemDecoration(dividerItemDecoration);
         adapter.notifyDataSetChanged();
 
     }

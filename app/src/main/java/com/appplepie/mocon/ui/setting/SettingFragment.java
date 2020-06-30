@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,7 +63,10 @@ public class SettingFragment extends Fragment {
         Log.e(TAG, "onCreateView: entered "+wifiPlaces );
         WifiListRecyclerAdapter adapter = new WifiListRecyclerAdapter(wifiPlaces);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), manager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setLayoutManager(manager);
 
         addWifiPlace.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), WifiSetting.class);
