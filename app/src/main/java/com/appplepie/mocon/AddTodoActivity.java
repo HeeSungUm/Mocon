@@ -87,7 +87,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
             if (!descEt.getText().toString().equals("")) {
                 Intent intent = getIntent();
                 intent.putExtra("desc", descEt.getText().toString());
-                intent.putExtra("place", placeEt.getText().toString());
+                intent.putExtra("place", placeDropDown.getText().toString());
 
                 alarmCalendar.set(year, month, day, hour, minute, 0);
                 diaryNotification(alarmCalendar);
