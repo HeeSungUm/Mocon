@@ -37,6 +37,12 @@ public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<Calen
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.heading_TextView.setText(itemArrayList.get(position).getTitle());
         holder.desc_TextView.setText(itemArrayList.get(position).getDesc());
+        holder.checkBox.setOnClickListener(view -> {
+            if (holder.checkBox.isChecked() != itemArrayList.get(position).isChecked()){
+                itemArrayList.get(position).setChecked(holder.checkBox.isChecked());
+            }
+        });
+        holder.checkBox.setChecked(itemArrayList.get(position).isChecked());
     }
 
     @Override

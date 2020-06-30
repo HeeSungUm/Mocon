@@ -4,11 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appplepie.mocon.AddTodoActivity;
 import com.appplepie.mocon.R;
+import com.appplepie.mocon.WifiPlace;
 import com.appplepie.mocon.ui.calendar.CalendarRemainderRecyclerAdapter;
 import com.appplepie.mocon.TodoItem;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -37,14 +43,41 @@ public class HomeFragment extends Fragment {
     String ssid;
     public static ArrayList<TodoItem> todoItems = new ArrayList<>();
     CalendarRemainderRecyclerAdapter adapter;
+    SharedPreferences preferences;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 111){
+            preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = preferences.edit();
+
             String place = data.getStringExtra("place");
             String desc = data.getStringExtra("desc");
-            todoItems.add(new TodoItem(desc, place));
+
+            Gson gson = new Gson();
+            String json = preferences.getString("TodoItems", "");
+            Type type = new TypeToken<ArrayList<TodoItem>>(){}.getType();
+            todoItems = gson.fromJson(json, type);
+
+            if (todoItems != null){
+                todoItems.add(new TodoItem(desc, place));
+
+                String jsonText = gson.toJson(todoItems);
+                editor.putString("TodoItems", jsonText);
+            }
+            else {
+                todoItems = new ArrayList<>();
+                todoItems.add(new TodoItem(desc, place));
+
+                String jsonText = gson.toJson(todoItems);
+                editor.putString("TodoItems", jsonText);
+            }
+            editor.apply();
+            json = preferences.getString("TodoItems", "");
+            todoItems = gson.fromJson(json, type);
+            Log.e("Home", "onActivityResult: "+todoItems );
+
             adapter.notifyDataSetChanged();
         }
 
@@ -58,6 +91,22 @@ public class HomeFragment extends Fragment {
         addTodo = root.findViewById(R.id.homeAddTodo);
         ssidTv = root.findViewById(R.id.homeWifiTv);
         RecyclerView recyclerView = root.findViewById(R.id.homeTodoRecycler);
+
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+
+        Gson gson = new Gson();
+        String json = preferences.getString("TodoItems", "");
+        Type type = new TypeToken<ArrayList<TodoItem>>(){}.getType();
+        todoItems = gson.fromJson(json, type);
+        if (todoItems == null){
+            todoItems = new ArrayList<>();
+            String jsonText = gson.toJson(todoItems);
+            editor.putString("TodoItems", jsonText);
+            editor.apply();
+        }
+        Log.e("TAG", "onCreateView: "+todoItems );
         adapter = new CalendarRemainderRecyclerAdapter(todoItems);
 
         IntentFilter filter = new IntentFilter();

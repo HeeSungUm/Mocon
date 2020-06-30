@@ -6,6 +6,24 @@ public class TodoItem {
     private String time = "";
     private String date = "";
 
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    private boolean checked = false;
+
     public TodoItem(String title, String desc, String time, String date) {
         this.title = title;
         this.place = desc;
