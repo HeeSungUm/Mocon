@@ -1,5 +1,6 @@
-package com.appplepie.mocon.ui;
+package com.appplepie.mocon;
 
+import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,17 +25,18 @@ import java.util.Locale;
 
 public class NotificationService extends Service {
     String desc;
+
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        desc = intent.getStringExtra("desc");
         return null;
     }
 
+
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.e("service Entered", "onCreate: 123" );
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e("service Entered", "onCreate: "+intent.getStringExtra("desc") );
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
 
@@ -63,14 +65,12 @@ public class NotificationService extends Service {
             notificationManager.createNotificationChannel(channel);
         }
 
-        Calendar cal = Calendar.getInstance(Locale.KOREA);
         builder.setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-
                 .setTicker("{Time to watch some cool stuff!}")
-                .setContentTitle(cal.get(Calendar.HOUR) + " : " + cal.get(Calendar.MINUTE))
-                .setContentText(desc)
+                .setContentTitle(desc)
+                .setContentText(intent.getStringExtra("desc"))
                 .setContentInfo("INFO")
                 .setContentIntent(pendingI);
 
@@ -88,10 +88,15 @@ public class NotificationService extends Service {
             SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("daily alarm", MODE_PRIVATE).edit();
             editor.putLong("nextNotifyTime", nextNotifyTime.getTimeInMillis());
             editor.apply();
+            ;
 
-            Date currentDateTime = nextNotifyTime.getTime();
-            String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
-            Toast.makeText(getApplicationContext().getApplicationContext(), "다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_LONG).show();
         }
+        stopSelf();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
 }

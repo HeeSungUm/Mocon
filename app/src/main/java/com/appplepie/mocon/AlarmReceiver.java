@@ -1,26 +1,10 @@
 package com.appplepie.mocon;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.core.app.NotificationCompat;
-
-import com.appplepie.mocon.ui.NotificationService;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
@@ -87,8 +71,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 //        }
         Intent serviceIntent = new Intent(context, NotificationService.class);
         serviceIntent.putExtra("desc", intent.getStringExtra("desc"));
-        Log.e("Receiver", "onReceive: entered" );
-        context.startForegroundService(intent);
+
+
+        Log.e("Receiver", "onReceive: entered " + intent.getStringExtra("desc") );
+        context.startService(serviceIntent);
     }
 }
 
