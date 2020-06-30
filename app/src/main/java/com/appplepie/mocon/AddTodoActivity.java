@@ -7,37 +7,63 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddTodoActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private static final String TAG = "AddTodoActivity";
-    EditText placeEt, descEt, timeEt;
+    EditText descEt, timeEt;
+    AutoCompleteTextView placeDropDown;
     Button submitBtn;
     private int year, month, day;
     private int hour, minute;
-
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_todo);
-        placeEt = findViewById(R.id.addPlanPlaceDropDown);
+        placeDropDown = findViewById(R.id.addPlanPlaceDropDown);
         descEt = findViewById(R.id.addPlanDescInput);
         submitBtn = findViewById(R.id.addPlanSubmitButton);
         timeEt = findViewById(R.id.AddPlanTimeEditText);
 
+        placeDropDown.setEnabled(false);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+
+        Gson gson = new Gson();
+        String json = preferences.getString("WifiPlaceList", "");
+        Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
+        ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
+        String[] places = new String[wifiPlaces.size()];
+        for (int i = 0; i<wifiPlaces.size(); i++){
+            places[i] = wifiPlaces.get(i).place;
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, places);
+        placeDropDown.setAdapter(arrayAdapter);
         timeEt.setOnClickListener(view -> {
             Log.e("addtodo", "yes");
             Calendar now = Calendar.getInstance();
@@ -59,7 +85,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
             if (!descEt.getText().toString().equals("")) {
                 Intent intent = getIntent();
                 intent.putExtra("desc", descEt.getText().toString());
-                intent.putExtra("place", placeEt.getText().toString());
+                intent.putExtra("place", placeDropDown.getText().toString());
                 intent.putExtra("date", "" + year + "/" + (month + 1) + "/" + day);
                 intent.putExtra("time", "" + hour + ":" + this.minute);
                 setResult(111, intent);

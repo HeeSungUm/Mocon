@@ -2,13 +2,13 @@ package com.appplepie.mocon;
 
 public class TodoItem {
     private String title;
-    private String desc;
+    private String place;
     private String time = "";
     private String date = "";
 
     public TodoItem(String title, String desc, String time, String date) {
         this.title = title;
-        this.desc = desc;
+        this.place = desc;
         this.time = time;
         this.date = date;
     }
@@ -31,7 +31,7 @@ public class TodoItem {
 
     public TodoItem(String title, String desc) {
         this.title = title;
-        this.desc = desc;
+        this.place = desc;
     }
 
     public String getTitle() {
@@ -43,10 +43,10 @@ public class TodoItem {
     }
 
     public String getDesc() {
-        return desc;
+        return place;
     }
 
     public void setDesc(String desc) {
-        this.desc = desc;
+        this.place = desc;
     }
 }

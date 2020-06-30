@@ -41,26 +41,28 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String place = data.getStringExtra("place");
-        String desc = data.getStringExtra("desc");
-        String date = data.getStringExtra("date");
-        String time = data.getStringExtra("time");
-        TodoItem todoItem = new TodoItem(desc, place);
-        if (!date.equals("") && time.equals("")){
-            todoItem.setDate(date);
-        }
-        else if(date.equals("")){
+        if (resultCode==111){
+            String place = data.getStringExtra("place");
+            String desc = data.getStringExtra("desc");
+            String date = data.getStringExtra("date");
+            String time = data.getStringExtra("time");
+            TodoItem todoItem = new TodoItem(desc, place);
+            if (!date.equals("") && time.equals("")){
+                todoItem.setDate(date);
+            }
+            else if(date.equals("")){
 
-        }
-        else {
-            todoItem.setDate(date);
-            todoItem.setTime(time);
-        }
-        todoItems.add(todoItem);
-        //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+            }
+            else {
+                todoItem.setDate(date);
+                todoItem.setTime(time);
+            }
+            todoItems.add(todoItem);
+            //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
 //                manager.getOrientation());
 //        recyclerView.addItemDecoration(dividerItemDecoration);
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
+        }
 
     }
 
