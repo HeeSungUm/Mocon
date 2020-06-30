@@ -39,6 +39,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
     Button submitBtn;
     private int year, month, day;
     private int hour, minute;
+    int id=0;
     SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,15 +91,12 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
                 intent.putExtra("place", placeDropDown.getText().toString());
 
                 alarmCalendar.set(year, month, day, hour, minute, 0);
-                diaryNotification(alarmCalendar);
+                diaryNotification(alarmCalendar, descEt.getText().toString());
 
-                intent.putExtra("date",""+year+"/"+(month+1)+"/"+day);
-                intent.putExtra("time",""+hour+":"+this.minute);
-
-                intent.putExtra("place", placeDropDown.getText().toString());
                 intent.putExtra("date", "" + year + "/" + (month + 1) + "/" + day);
                 intent.putExtra("time", "" + hour + ":" + this.minute);
                 setResult(111, intent);
+                Log.e(TAG, "onCreate: "+intent.getStringExtra("desc") );
                 finish();
             } else {
                 descEt.setError("메모를 입력해주세요");
@@ -140,7 +138,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
 
     }
 
-    void diaryNotification(Calendar calendar) {
+    void diaryNotification(Calendar calendar, String desc) {
 //        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 //        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 //        Boolean dailyNotify = sharedPref.getBoolean(SettingsActivity.KEY_PREF_DAILY_NOTIFICATION, true);
@@ -148,9 +146,9 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         PackageManager pm = this.getPackageManager();
         ComponentName receiver = new ComponentName(this, DeviceBootReceiver.class);
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        alarmIntent.putExtra("desc", desc);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, createID(), alarmIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Log.e(TAG, "diaryNotification: "+calendar.getTimeInMillis() );
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
 //        if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
@@ -160,5 +158,8 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
+    }
+    int createID(){
+       return id++;
     }
 }

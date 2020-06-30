@@ -38,6 +38,7 @@
         </receiver>
 
         <receiver android:name=".AlarmReceiver" />
+        <service android:name=".NotificationService" android:enabled="true"/>
     </application>
 
 </manifest>
