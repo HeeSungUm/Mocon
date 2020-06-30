@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddTodoActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    Calendar alarmCalendar = Calendar.getInstance();
     private static final String TAG = "AddTodoActivity";
     EditText descEt, timeEt;
     AutoCompleteTextView placeDropDown;
@@ -65,7 +66,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, places);
         placeDropDown.setAdapter(arrayAdapter);
         timeEt.setOnClickListener(view -> {
-            Log.e("addtodo", "yes");
+            Log.e("addtodo","yes");
             Calendar now = Calendar.getInstance();
             DatePickerDialog dpd = DatePickerDialog.newInstance(
                     AddTodoActivity.this,
@@ -79,12 +80,21 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
             dpd.show(getSupportFragmentManager(), "DatepickerDialog");
 
 
+
         });
 
         submitBtn.setOnClickListener(view -> {
             if (!descEt.getText().toString().equals("")) {
                 Intent intent = getIntent();
                 intent.putExtra("desc", descEt.getText().toString());
+                intent.putExtra("place", placeEt.getText().toString());
+
+                alarmCalendar.set(year, month, day, hour, minute, 0);
+                diaryNotification(alarmCalendar);
+
+                intent.putExtra("date",""+year+"/"+(month+1)+"/"+day);
+                intent.putExtra("time",""+hour+":"+this.minute);
+
                 intent.putExtra("place", placeDropDown.getText().toString());
                 intent.putExtra("date", "" + year + "/" + (month + 1) + "/" + day);
                 intent.putExtra("time", "" + hour + ":" + this.minute);
@@ -143,10 +153,10 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         Log.e(TAG, "diaryNotification: "+calendar.getTimeInMillis() );
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
-        if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
-            alarmManager.cancel(pendingIntent);
-            Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
-        }
+//        if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
+//            alarmManager.cancel(pendingIntent);
+//            Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
+//        }
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
