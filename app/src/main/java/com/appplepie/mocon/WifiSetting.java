@@ -68,7 +68,6 @@ public class WifiSetting extends AppCompatActivity {
         spinner.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         spinner.setAdapter(stringArrayAdapter);
 
-
         Button button = findViewById(R.id.wifiSettingSubmit);
         button.setOnClickListener(view -> {
             if (editText.getText().toString().equals("") ^ spinner.getText().toString().equals("")) {

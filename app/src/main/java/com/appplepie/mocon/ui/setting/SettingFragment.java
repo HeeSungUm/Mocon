@@ -1,5 +1,6 @@
 package com.appplepie.mocon.ui.setting;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -55,10 +58,6 @@ public class SettingFragment extends Fragment {
         String json = preferences.getString("WifiPlaceList", "");
         Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
         ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("wifi");
-
-        wifiPlaces.add(new WifiPlace("집", arrayList));
 
         Log.e(TAG, "onCreateView: entered "+wifiPlaces );
         WifiListRecyclerAdapter adapter = new WifiListRecyclerAdapter(wifiPlaces);
@@ -67,6 +66,29 @@ public class SettingFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), manager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(manager);
+
+        adapter.setOnItemClickListener((v, position) -> {
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+            alertBuilder.setTitle("WIFI 삭제");
+            alertBuilder.setMessage("삭제하시겠습니까?");
+
+            alertBuilder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    wifiPlaces.remove(position);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            alertBuilder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            alertBuilder.show();
+        });
 
         addWifiPlace.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), WifiSetting.class);

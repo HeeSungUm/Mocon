@@ -1,5 +1,6 @@
 package com.appplepie.mocon;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,16 @@ import java.util.ArrayList;
 
 public class WifiListRecyclerAdapter  extends RecyclerView.Adapter<WifiListRecyclerAdapter.ItemViewHolder>{
     ArrayList<WifiPlace> wifiPlaceArrayList;
+
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
 
     public WifiListRecyclerAdapter(ArrayList<WifiPlace> wifiPlaceArrayList) {
         this.wifiPlaceArrayList = wifiPlaceArrayList;
@@ -44,13 +55,24 @@ public class WifiListRecyclerAdapter  extends RecyclerView.Adapter<WifiListRecyc
         return wifiPlaceArrayList.size();
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder{
+    class ItemViewHolder extends RecyclerView.ViewHolder{
         TextView title;
         TextView wifis;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.wifiListItemTitle);
             wifis = itemView.findViewById(R.id.wifiListItemWifis);
+
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if(position != RecyclerView.NO_POSITION){
+                    WifiPlace item = wifiPlaceArrayList.get(position);
+                    Log.e("wifi",item.getPlace());
+                    if(mListener != null){
+                        mListener.onItemClick(view, position);
+                    }
+                }
+            });
         }
     }
 }

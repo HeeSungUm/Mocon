@@ -106,14 +106,6 @@
         android:layout_marginBottom="16dp"
         android:text="추가"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addPlanCancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/addPlanSubmitButton"
-        app:layout_constraintRight_toLeftOf="@id/addPlanSubmitButton"
-        android:layout_marginEnd="16dp"
-        android:text="취소"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
