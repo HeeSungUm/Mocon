@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiConfiguration;
@@ -21,6 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -68,6 +72,8 @@ public class WifiSetting extends AppCompatActivity {
         spinner.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         spinner.setAdapter(stringArrayAdapter);
 
+        Intent intent = getIntent();
+
         Button button = findViewById(R.id.wifiSettingSubmit);
         button.setOnClickListener(view -> {
             if (editText.getText().toString().equals("") ^ spinner.getText().toString().equals("")) {
@@ -83,16 +89,20 @@ public class WifiSetting extends AppCompatActivity {
                 if (wifiPlaces!=null){
                     wifiPlaces.add(new WifiPlace(place, wifi));
                     String jsonText = gson.toJson(wifiPlaces);
+                    Toast.makeText(this, "추가되었습니다", Toast.LENGTH_SHORT).show();
                     editor.putString("WifiPlaceList", jsonText);
                     editor.apply();
+                    setResult(111,intent);
                     finish();
                 }
                 else{
                     ArrayList<WifiPlace> wifiPlaces1 = new ArrayList<>();
                     wifiPlaces1.add(new WifiPlace(place, wifi));
                     String jsonText = gson.toJson(wifiPlaces1);
+                    Toast.makeText(this, "추가되었습니다", Toast.LENGTH_SHORT).show();
                     editor.putString("WifiPlaceList", jsonText);
                     editor.apply();
+                    setResult(111,intent);
                     finish();
                 }
             }
