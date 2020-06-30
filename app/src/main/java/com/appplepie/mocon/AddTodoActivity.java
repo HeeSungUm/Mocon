@@ -23,6 +23,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.util.Calendar;
 
 public class AddTodoActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    Calendar alarmCalendar = Calendar.getInstance();
     private static final String TAG = "AddTodoActivity";
     EditText placeEt, descEt, timeEt;
     Button submitBtn;
@@ -39,7 +40,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         timeEt = findViewById(R.id.AddPlanTimeEditText);
 
         timeEt.setOnClickListener(view -> {
-            Log.e("addtodo", "yes");
+            Log.e("addtodo","yes");
             Calendar now = Calendar.getInstance();
             DatePickerDialog dpd = DatePickerDialog.newInstance(
                     AddTodoActivity.this,
@@ -53,6 +54,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
             dpd.show(getSupportFragmentManager(), "DatepickerDialog");
 
 
+
         });
 
         submitBtn.setOnClickListener(view -> {
@@ -60,8 +62,13 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
                 Intent intent = getIntent();
                 intent.putExtra("desc", descEt.getText().toString());
                 intent.putExtra("place", placeEt.getText().toString());
-                intent.putExtra("date", "" + year + "/" + (month + 1) + "/" + day);
-                intent.putExtra("time", "" + hour + ":" + this.minute);
+
+                alarmCalendar.set(year, month, day, hour, minute, 0);
+                diaryNotification(alarmCalendar);
+
+                intent.putExtra("date",""+year+"/"+(month+1)+"/"+day);
+                intent.putExtra("time",""+hour+":"+this.minute);
+
                 setResult(111, intent);
                 finish();
             } else {
@@ -77,7 +84,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         this.year = year;
         month = monthOfYear;
         day = dayOfMonth;
-        Log.e("Datepicker", "" + this.year + "/" + month + "/" + day);
+        Log.e("Datepicker",""+this.year+"/"+month+"/"+day);
         Calendar now = Calendar.getInstance();
         TimePickerDialog tpd = TimePickerDialog.newInstance(
                 AddTodoActivity.this,
@@ -117,10 +124,10 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         Log.e(TAG, "diaryNotification: "+calendar.getTimeInMillis() );
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
-        if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
-            alarmManager.cancel(pendingIntent);
-            Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
-        }
+//        if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
+//            alarmManager.cancel(pendingIntent);
+//            Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
+//        }
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
