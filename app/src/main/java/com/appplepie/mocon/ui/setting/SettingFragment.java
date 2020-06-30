@@ -39,11 +39,20 @@ public class SettingFragment extends Fragment {
     RecyclerView recyclerView;
     ImageButton addWifiPlace;
     SharedPreferences preferences;
+    TextView emptyTv;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if(resultCode == 111){
+            Gson gson = new Gson();
+            String json = preferences.getString("WifiPlaceList", "");
+            Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
+            ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
+            WifiListRecyclerAdapter adapter = new WifiListRecyclerAdapter(wifiPlaces);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,8 +60,10 @@ public class SettingFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_setting, container, false);
         recyclerView = root.findViewById(R.id.wifiPlaceRecycler);
         addWifiPlace = root.findViewById(R.id.settingAddWifiPlace);
+        emptyTv = root.findViewById(R.id.settingTv);
+        emptyTv.setText("");
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-
+        SharedPreferences.Editor editor = preferences.edit();
 
         Gson gson = new Gson();
         String json = preferences.getString("WifiPlaceList", "");
@@ -66,6 +77,15 @@ public class SettingFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), manager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(manager);
+        adapter.notifyDataSetChanged();
+
+        if(wifiPlaces.size() == 0){
+            emptyTv.setText("목록이 비었습니다.\n장소를 추가하세요.");
+        }
+        else{
+            emptyTv.setText("");
+        }
+
 
         adapter.setOnItemClickListener((v, position) -> {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
@@ -77,7 +97,13 @@ public class SettingFragment extends Fragment {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     wifiPlaces.remove(position);
                     adapter.notifyDataSetChanged();
+                    String jsonText = gson.toJson(wifiPlaces);
+                    editor.putString("WifiPlaceList", jsonText);
+                    editor.apply();
                     Toast.makeText(getContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                    if(wifiPlaces.size() == 0){
+                        emptyTv.setText("목록이 비었습니다.\n장소를 추가하세요.");
+                    }
                 }
             });
 
