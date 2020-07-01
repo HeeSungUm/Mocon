@@ -116,7 +116,6 @@ public class HomeFragment extends Fragment {
             editor.putString("TodoItems", jsonText);
             editor.apply();
         }
-        Log.e("TAG", "onCreateView: " + todoItems);
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
@@ -147,12 +146,8 @@ public class HomeFragment extends Fragment {
                             place = getPlaceBySSID(ssid);
                             currentPlaceTv.setText(place);
 
-                            if (!place.equals("")){
-                                adapter = new CalendarRemainderRecyclerAdapter(getActivity(), place, todoItems);
-                            }
-                            else{
-                                adapter = new CalendarRemainderRecyclerAdapter(todoItems, getActivity());
-                            }
+                            adapter = new CalendarRemainderRecyclerAdapter(todoItems, getActivity());
+
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
