@@ -79,12 +79,17 @@ public class SettingFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         adapter.notifyDataSetChanged();
 
-        if(wifiPlaces.size() == 0){
+        if (wifiPlaces!=null){
+            if(wifiPlaces.size() == 0){
+                emptyTv.setText("목록이 비었습니다.\n장소를 추가하세요.");
+            }
+            else{
+                emptyTv.setText("");
+            }
+        }else {
             emptyTv.setText("목록이 비었습니다.\n장소를 추가하세요.");
         }
-        else{
-            emptyTv.setText("");
-        }
+
 
 
         adapter.setOnItemClickListener((v, position) -> {
@@ -92,26 +97,20 @@ public class SettingFragment extends Fragment {
             alertBuilder.setTitle("WIFI 삭제");
             alertBuilder.setMessage("삭제하시겠습니까?");
 
-            alertBuilder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    wifiPlaces.remove(position);
-                    adapter.notifyDataSetChanged();
-                    String jsonText = gson.toJson(wifiPlaces);
-                    editor.putString("WifiPlaceList", jsonText);
-                    editor.apply();
-                    Toast.makeText(getContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                    if(wifiPlaces.size() == 0){
-                        emptyTv.setText("목록이 비었습니다.\n장소를 추가하세요.");
-                    }
+            alertBuilder.setPositiveButton("예", (dialogInterface, i) -> {
+                wifiPlaces.remove(position);
+                adapter.notifyDataSetChanged();
+                String jsonText = gson.toJson(wifiPlaces);
+                editor.putString("WifiPlaceList", jsonText);
+                editor.apply();
+                Toast.makeText(getContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                if(wifiPlaces.size() == 0){
+                    emptyTv.setText("목록이 비었습니다.\n장소를 추가하세요.");
                 }
             });
 
-            alertBuilder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+            alertBuilder.setNegativeButton("취소", (dialogInterface, i) -> {
 
-                }
             });
             alertBuilder.show();
         });

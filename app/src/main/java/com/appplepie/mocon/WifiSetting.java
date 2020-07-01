@@ -12,6 +12,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,7 +55,8 @@ public class WifiSetting extends AppCompatActivity {
 
         MultiAutoCompleteTextView spinner = findViewById(R.id.dialogWifiInput);
         EditText editText = findViewById(R.id.wifiPlaceInput);
-
+        Button skipButton = findViewById(R.id.wifiSettingSkip);
+        Button summitButton = findViewById(R.id.wifiSettingSubmit);
         ArrayAdapter<String> stringArrayAdapter;
 
         if (wifiList == null || wifiList.length == 0) {
@@ -67,9 +69,9 @@ public class WifiSetting extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Button button = findViewById(R.id.wifiSettingSubmit);
-        button.setOnClickListener(view -> {
-            if (editText.getText().toString().equals("") ^ spinner.getText().toString().equals("")) {
+
+        summitButton.setOnClickListener(view -> {
+            if (editText.getText().toString().equals("") || spinner.getText().toString().equals("")) {
                 editText.setError("빈칸을 다 채워주세요");
             } else {
                 String place = editText.getText().toString();
@@ -100,6 +102,7 @@ public class WifiSetting extends AppCompatActivity {
                 }
             }
         });
+        skipButton.setOnClickListener(view -> finish());
     }
     void getWifiConfigurations (WifiManager wifiManager){
         List<WifiConfiguration> configurations = wifiManager.getConfiguredNetworks();
