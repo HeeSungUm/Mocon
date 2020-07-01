@@ -51,11 +51,6 @@ public class HomeFragment extends Fragment {
     SharedPreferences preferences;
     RecyclerView recyclerView;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -122,14 +117,11 @@ public class HomeFragment extends Fragment {
             editor.apply();
         }
         Log.e("TAG", "onCreateView: " + todoItems);
-        adapter = new CalendarRemainderRecyclerAdapter(todoItems, getActivity());
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         getContext().registerReceiver(mReceiver, filter);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         addTodo.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AddTodoActivity.class);
@@ -142,6 +134,7 @@ public class HomeFragment extends Fragment {
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            String place;
             if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
                 NetworkInfo netInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (ConnectivityManager.TYPE_WIFI == netInfo.getType()) {
@@ -151,7 +144,18 @@ public class HomeFragment extends Fragment {
                             WifiInfo wifiinfo = wifiManager.getConnectionInfo();
                             ssid = wifiinfo.getSSID();
                             ssidTv.setText(ssid);
-                            currentPlaceTv.setText(getPlaceBySSID(ssid));
+                            place = getPlaceBySSID(ssid);
+                            currentPlaceTv.setText(place);
+
+                            if (!place.equals("")){
+                                adapter = new CalendarRemainderRecyclerAdapter(getActivity(), place, todoItems);
+                            }
+                            else{
+                                adapter = new CalendarRemainderRecyclerAdapter(todoItems, getActivity());
+                            }
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
                         }
 
                     }
@@ -168,15 +172,16 @@ public class HomeFragment extends Fragment {
         Type type = new TypeToken<ArrayList<WifiPlace>>() {
         }.getType();
         ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
-        if (wifiPlaces != null) {
+        if (wifiPlaces != null && wifiPlaces.size()!=0) {
             for (int i = 0; i < wifiPlaces.size(); i++) {
-                for (int j = 0; i<wifiPlaces.get(i).wifi.size(); j++){
-                    if (ssid == wifiPlaces.get(i).wifi.get(j)){
+                for (int j = 0; j<wifiPlaces.get(i).wifi.size(); j++){
+                    Log.e("tag", "getPlaceBySSID: "+ wifiPlaces.size() + "i "+wifiPlaces.get(i).wifi.size() + "j "+ssid );
+                    if (ssid.equals(wifiPlaces.get(i).wifi.get(j))){
                         return wifiPlaces.get(i).place;
                     }
                 }
             }
         }
-        return "현재 위치";
+        return "";
     }
 }
