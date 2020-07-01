@@ -17,8 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.TodoActivity"></activity>
-        <activity android:name=".AddTodoActivity" />
+        <activity android:name=".ui.todo.AddTodoActivity" />
         <activity
             android:name=".WifiSetting"
             android:label="와이파이 설정" />
@@ -33,13 +32,13 @@
         </activity>
 
         <receiver
-            android:name=".DeviceBootReceiver"
+            android:name=".receivers.DeviceBootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".receivers.AlarmReceiver" />
 
         <service
             android:name=".NotificationService"

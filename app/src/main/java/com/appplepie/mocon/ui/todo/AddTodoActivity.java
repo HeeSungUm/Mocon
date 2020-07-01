@@ -1,4 +1,4 @@
-package com.appplepie.mocon;
+package com.appplepie.mocon.ui.todo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,15 +13,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
+import com.appplepie.mocon.receivers.AlarmReceiver;
+import com.appplepie.mocon.receivers.DeviceBootReceiver;
+import com.appplepie.mocon.R;
+import com.appplepie.mocon.WifiPlace;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;

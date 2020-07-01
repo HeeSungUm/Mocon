@@ -1,10 +1,12 @@
-package com.appplepie.mocon;
+package com.appplepie.mocon.receivers;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.appplepie.mocon.NotificationService;
 
 public class AlarmReceiver extends BroadcastReceiver {
     @Override

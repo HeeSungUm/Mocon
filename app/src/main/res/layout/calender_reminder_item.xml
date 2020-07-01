@@ -49,6 +49,16 @@
                tools:text="테스트 텍스트 입니다."
                android:textSize="18sp"
                android:layout_marginBottom="16dp"/>
+           <TextView
+               android:id="@+id/itemDelTv"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="삭제"
+               android:textColor="@android:color/holo_red_dark"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintRight_toRightOf="parent"
+               android:layout_marginEnd="16dp"/>
        </androidx.constraintlayout.widget.ConstraintLayout>
    </com.google.android.material.card.MaterialCardView>
 

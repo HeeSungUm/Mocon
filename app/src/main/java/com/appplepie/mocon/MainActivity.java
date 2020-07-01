@@ -1,12 +1,10 @@
 package com.appplepie.mocon;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 
 
@@ -16,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
@@ -36,12 +33,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor= preferences.edit();
         setContentView(R.layout.activity_main);
 
-        if (preferences.getBoolean("FirstStart", true)){
-            editor.putBoolean("FirstStart", false).apply();
-            Intent intent = new Intent(this, WifiSetting.class);
-            startActivity(intent);
-        }
-
+//        if (preferences.getBoolean("FirstStart", true)){
+//            editor.putBoolean("FirstStart", false).apply();
+//            Intent intent = new Intent(this, WifiSetting.class);
+//            startActivity(intent);
+//        }
+        Intent intent = new Intent(this, WifiSetting.class);
+        startActivity(intent);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

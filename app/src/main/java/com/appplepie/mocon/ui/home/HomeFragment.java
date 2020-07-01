@@ -10,30 +10,26 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appplepie.mocon.AddTodoActivity;
+import com.appplepie.mocon.ui.todo.AddTodoActivity;
 import com.appplepie.mocon.R;
 import com.appplepie.mocon.WifiPlace;
 import com.appplepie.mocon.ui.calendar.CalendarRemainderRecyclerAdapter;
-import com.appplepie.mocon.TodoItem;
+import com.appplepie.mocon.ui.todo.TodoItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

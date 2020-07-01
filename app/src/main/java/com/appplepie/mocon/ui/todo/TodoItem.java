@@ -1,4 +1,4 @@
-package com.appplepie.mocon;
+package com.appplepie.mocon.ui.todo;
 
 public class TodoItem {
     private String title;

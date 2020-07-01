@@ -1,9 +1,9 @@
 package com.appplepie.mocon;
 
 
-import java.lang.reflect.Array;
+import com.appplepie.mocon.ui.todo.TodoItem;
+
 import java.util.ArrayList;
-import java.util.Set;
 
 public class WifiPlace {
     public ArrayList<TodoItem> todoItems;
