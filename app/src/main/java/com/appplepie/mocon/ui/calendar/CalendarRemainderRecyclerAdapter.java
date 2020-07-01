@@ -18,13 +18,37 @@ import com.appplepie.mocon.ui.TodoActivity;
 
 import java.util.ArrayList;
 
-public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<CalendarRemainderRecyclerAdapter.ItemViewHolder>{
+public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<CalendarRemainderRecyclerAdapter.ItemViewHolder> {
     private Activity activity;
+    private String place = "";
     ArrayList<TodoItem> itemArrayList;
+    ArrayList<TodoItem> headerArrayList = new ArrayList<>();
+    private final int TYPE_CURRENT_HEADER = 0;
+    private final int TYPE_HEADER = 1;
+    private final int TYPE_CURRENT_ITEM = 2;
+    private final int TYPE_ITEM = 3;
 
     public CalendarRemainderRecyclerAdapter(ArrayList<TodoItem> itemArray, Activity activity) {
         this.itemArrayList = itemArray;
         this.activity = activity;
+    }
+
+    public CalendarRemainderRecyclerAdapter(Activity activity, String place, ArrayList<TodoItem> itemArrayList) {
+        ArrayList<TodoItem> currentPlaceList = new ArrayList<>();
+        ArrayList<TodoItem> placeList = new ArrayList<>();
+        this.activity = activity;
+        this.place = place;
+        this.itemArrayList = itemArrayList;
+        for (int i = 0; i<itemArrayList.size(); i++){
+            if (itemArrayList.get(i).getPlace() == place){
+                currentPlaceList.add(itemArrayList.get(i));
+            }
+            else{
+                placeList.add(itemArrayList.get(i));
+            }
+        }
+        headerArrayList.addAll(currentPlaceList);
+        headerArrayList.addAll(placeList);
     }
 
     @NonNull
@@ -77,5 +101,22 @@ public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<Calen
                 activity.startActivity(intent);
             });
         }
+
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (!place.equals("")){
+
+        }
+        return super.getItemViewType(position);
+    }
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        HeaderViewHolder(View headerView) {
+            super(headerView);
+        }
+    }
+
 }

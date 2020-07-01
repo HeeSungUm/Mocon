@@ -41,7 +41,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-    TextView ssidTv;
+    TextView ssidTv, currentPlaceTv;
     ImageButton addTodo;
     WifiManager wifiManager;
     String ssid;
@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 111){
+        if (resultCode == 111) {
             preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = preferences.edit();
 
@@ -71,16 +71,17 @@ public class HomeFragment extends Fragment {
 
             Gson gson = new Gson();
             String json = preferences.getString("TodoItems", "");
-            Type type = new TypeToken<ArrayList<TodoItem>>(){}.getType();
+            Type type = new TypeToken<ArrayList<TodoItem>>() {
+            }.getType();
             todoItems = gson.fromJson(json, type);
 
-            if (todoItems != null){
+            if (todoItems != null) {
                 todoItems.add(new TodoItem(desc, place, time, date));
 
                 String jsonText = gson.toJson(todoItems);
                 editor.putString("TodoItems", jsonText);
-                Log.e("tag", "onActivityResult: "+jsonText );
-                Log.e("tag", "onActivityResult: "+todoItems );
+                Log.e("tag", "onActivityResult: " + jsonText);
+                Log.e("tag", "onActivityResult: " + todoItems);
             } else {
                 todoItems = new ArrayList<>();
                 todoItems.add(new TodoItem(desc, place, time, date));
@@ -104,22 +105,23 @@ public class HomeFragment extends Fragment {
         addTodo = root.findViewById(R.id.homeAddTodo);
         ssidTv = root.findViewById(R.id.homeWifiTv);
         recyclerView = root.findViewById(R.id.homeTodoRecycler);
-
+        currentPlaceTv = root.findViewById(R.id.currentPlace);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = preferences.edit();
 
         Gson gson = new Gson();
         String json = preferences.getString("TodoItems", "");
-        Type type = new TypeToken<ArrayList<TodoItem>>(){}.getType();
+        Type type = new TypeToken<ArrayList<TodoItem>>() {
+        }.getType();
         todoItems = gson.fromJson(json, type);
-        if (todoItems == null){
+        if (todoItems == null) {
             todoItems = new ArrayList<>();
             String jsonText = gson.toJson(todoItems);
             editor.putString("TodoItems", jsonText);
             editor.apply();
         }
-        Log.e("TAG", "onCreateView: "+todoItems );
+        Log.e("TAG", "onCreateView: " + todoItems);
         adapter = new CalendarRemainderRecyclerAdapter(todoItems, getActivity());
 
         IntentFilter filter = new IntentFilter();
@@ -136,18 +138,20 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals (intent.getAction())){
+            if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
                 NetworkInfo netInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-                if (ConnectivityManager.TYPE_WIFI == netInfo.getType()){
-                    if (getContext() != null){
-                        if (getContext().getSystemService(getContext().WIFI_SERVICE) != null){
+                if (ConnectivityManager.TYPE_WIFI == netInfo.getType()) {
+                    if (getContext() != null) {
+                        if (getContext().getSystemService(getContext().WIFI_SERVICE) != null) {
                             wifiManager = (WifiManager) getContext().getSystemService(getContext().WIFI_SERVICE);
                             WifiInfo wifiinfo = wifiManager.getConnectionInfo();
                             ssid = wifiinfo.getSSID();
                             ssidTv.setText(ssid);
+                            currentPlaceTv.setText(getPlaceBySSID(ssid));
                         }
 
                     }
@@ -157,4 +161,22 @@ public class HomeFragment extends Fragment {
             }
         }
     };
+
+    String getPlaceBySSID(String ssid) {
+        Gson gson = new Gson();
+        String json = preferences.getString("WifiPlaceList", "");
+        Type type = new TypeToken<ArrayList<WifiPlace>>() {
+        }.getType();
+        ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
+        if (wifiPlaces != null) {
+            for (int i = 0; i < wifiPlaces.size(); i++) {
+                for (int j = 0; i<wifiPlaces.get(i).wifi.size(); j++){
+                    if (ssid == wifiPlaces.get(i).wifi.get(j)){
+                        return wifiPlaces.get(i).place;
+                    }
+                }
+            }
+        }
+        return "현재 위치";
+    }
 }
