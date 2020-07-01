@@ -150,9 +150,6 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
     }
 
     void diaryNotification(Calendar calendar, String desc) {
-//        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-//        Boolean dailyNotify = sharedPref.getBoolean(SettingsActivity.KEY_PREF_DAILY_NOTIFICATION, true);
 
         PackageManager pm = this.getPackageManager();
         ComponentName receiver = new ComponentName(this, DeviceBootReceiver.class);
@@ -161,11 +158,6 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, createID(), alarmIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-//        if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
-//            alarmManager.cancel(pendingIntent);
-//            Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
-//        }
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
