@@ -10,6 +10,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,8 +46,16 @@ public class HomeFragment extends Fragment {
     WifiManager wifiManager;
     String ssid;
     public static ArrayList<TodoItem> todoItems = new ArrayList<>();
+
     CalendarRemainderRecyclerAdapter adapter;
     SharedPreferences preferences;
+    RecyclerView recyclerView;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -54,6 +66,8 @@ public class HomeFragment extends Fragment {
 
             String place = data.getStringExtra("place");
             String desc = data.getStringExtra("desc");
+            String date = data.getStringExtra("date");
+            String time = data.getStringExtra("time");
 
             Gson gson = new Gson();
             String json = preferences.getString("TodoItems", "");
@@ -61,36 +75,35 @@ public class HomeFragment extends Fragment {
             todoItems = gson.fromJson(json, type);
 
             if (todoItems != null){
-                todoItems.add(new TodoItem(desc, place));
+                todoItems.add(new TodoItem(desc, place, time, date));
 
                 String jsonText = gson.toJson(todoItems);
                 editor.putString("TodoItems", jsonText);
-            }
-            else {
+                Log.e("tag", "onActivityResult: "+jsonText );
+                Log.e("tag", "onActivityResult: "+todoItems );
+            } else {
                 todoItems = new ArrayList<>();
-                todoItems.add(new TodoItem(desc, place));
+                todoItems.add(new TodoItem(desc, place, time, date));
 
                 String jsonText = gson.toJson(todoItems);
                 editor.putString("TodoItems", jsonText);
             }
             editor.apply();
-            json = preferences.getString("TodoItems", "");
-            todoItems = gson.fromJson(json, type);
-            Log.e("Home", "onActivityResult: "+todoItems );
+            adapter = new CalendarRemainderRecyclerAdapter(todoItems, getActivity());
+            recyclerView.setAdapter(adapter);
 
-            adapter.notifyDataSetChanged();
         }
+
 
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         addTodo = root.findViewById(R.id.homeAddTodo);
         ssidTv = root.findViewById(R.id.homeWifiTv);
-        RecyclerView recyclerView = root.findViewById(R.id.homeTodoRecycler);
+        recyclerView = root.findViewById(R.id.homeTodoRecycler);
 
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -107,7 +120,7 @@ public class HomeFragment extends Fragment {
             editor.apply();
         }
         Log.e("TAG", "onCreateView: "+todoItems );
-        adapter = new CalendarRemainderRecyclerAdapter(todoItems);
+        adapter = new CalendarRemainderRecyclerAdapter(todoItems, getActivity());
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
@@ -129,11 +142,14 @@ public class HomeFragment extends Fragment {
             if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals (intent.getAction())){
                 NetworkInfo netInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (ConnectivityManager.TYPE_WIFI == netInfo.getType()){
-                    if (getContext().getSystemService(getContext().WIFI_SERVICE) != null){
-                        wifiManager = (WifiManager) getContext().getSystemService(getContext().WIFI_SERVICE);
-                        WifiInfo wifiinfo = wifiManager.getConnectionInfo();
-                        ssid = wifiinfo.getSSID();
-                        ssidTv.setText(ssid);
+                    if (getContext() != null){
+                        if (getContext().getSystemService(getContext().WIFI_SERVICE) != null){
+                            wifiManager = (WifiManager) getContext().getSystemService(getContext().WIFI_SERVICE);
+                            WifiInfo wifiinfo = wifiManager.getConnectionInfo();
+                            ssid = wifiinfo.getSSID();
+                            ssidTv.setText(ssid);
+                        }
+
                     }
 
                 }

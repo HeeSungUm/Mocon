@@ -60,10 +60,6 @@ public class TodoItem {
         this.title = title;
     }
 
-    public String getDesc() {
-        return place;
-    }
-
     public void setDesc(String desc) {
         this.place = desc;
     }

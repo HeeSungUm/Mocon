@@ -52,6 +52,13 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
 
         placeDropDown.setEnabled(false);
 
+        Intent intent = getIntent();
+        descEt.setText(intent.getStringExtra("desc"));
+        placeDropDown.setText(intent.getStringExtra("place"));
+        if (intent.getStringExtra("date")!=null){
+            timeEt.setText(intent.getStringExtra("date")+" "+intent.getStringExtra("time"));
+        }
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 
@@ -60,6 +67,7 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
         Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
         ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
         String[] places = new String[wifiPlaces.size()];
+
         for (int i = 0; i<wifiPlaces.size(); i++){
             places[i] = wifiPlaces.get(i).place;
         }
@@ -86,15 +94,18 @@ public class AddTodoActivity extends AppCompatActivity implements DatePickerDial
 
         submitBtn.setOnClickListener(view -> {
             if (!descEt.getText().toString().equals("")) {
-                Intent intent = getIntent();
                 intent.putExtra("desc", descEt.getText().toString());
                 intent.putExtra("place", placeDropDown.getText().toString());
 
                 alarmCalendar.set(year, month, day, hour, minute, 0);
-                diaryNotification(alarmCalendar, descEt.getText().toString());
+                if (!timeEt.getText().toString().equals("")){
+                    diaryNotification(alarmCalendar, descEt.getText().toString());
+                }
+                if (month!=0){
+                    intent.putExtra("date", "" + year + "/" + (month + 1) + "/" + day);
+                    intent.putExtra("time", "" + hour + ":" + this.minute);
+                }
 
-                intent.putExtra("date", "" + year + "/" + (month + 1) + "/" + day);
-                intent.putExtra("time", "" + hour + ":" + this.minute);
                 setResult(111, intent);
                 Log.e(TAG, "onCreate: "+intent.getStringExtra("desc") );
                 finish();

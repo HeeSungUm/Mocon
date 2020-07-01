@@ -1,5 +1,7 @@
 package com.appplepie.mocon.ui.calendar;
-
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appplepie.mocon.AddTodoActivity;
 import com.appplepie.mocon.R;
 import com.appplepie.mocon.TodoItem;
+import com.appplepie.mocon.ui.TodoActivity;
 
 import java.util.ArrayList;
 
 public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<CalendarRemainderRecyclerAdapter.ItemViewHolder>{
-
+    private Activity activity;
     ArrayList<TodoItem> itemArrayList;
 
-    public CalendarRemainderRecyclerAdapter(ArrayList<TodoItem> itemArray) {
+    public CalendarRemainderRecyclerAdapter(ArrayList<TodoItem> itemArray, Activity activity) {
         this.itemArrayList = itemArray;
+        this.activity = activity;
     }
 
     @NonNull
@@ -27,7 +32,7 @@ public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<Calen
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.calender_reminder_item, viewGroup, false);
-        ItemViewHolder itemViewHolder = new ItemViewHolder(view);
+        ItemViewHolder itemViewHolder = new ItemViewHolder(view, activity);
 
         return itemViewHolder;
 
@@ -36,7 +41,7 @@ public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<Calen
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.heading_TextView.setText(itemArrayList.get(position).getTitle());
-        holder.desc_TextView.setText(itemArrayList.get(position).getDesc());
+        holder.desc_TextView.setText(itemArrayList.get(position).getPlace());
         holder.checkBox.setOnClickListener(view -> {
             if (holder.checkBox.isChecked() != itemArrayList.get(position).isChecked()){
                 itemArrayList.get(position).setChecked(holder.checkBox.isChecked());
@@ -56,11 +61,21 @@ public class CalendarRemainderRecyclerAdapter extends RecyclerView.Adapter<Calen
         TextView desc_TextView;
         CheckBox checkBox;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        public ItemViewHolder(@NonNull View itemView, Activity activity) {
             super(itemView);
             heading_TextView = itemView.findViewById(R.id.calendar_remind_heading);
             desc_TextView = itemView.findViewById(R.id.calendar_remind_desc);
-            checkBox = itemView.findViewById(R.id.checkbox);
+            checkBox = itemView.findViewById(R.id.calendar_remind_checkbox);
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                Intent intent = new Intent(activity.getApplicationContext(), AddTodoActivity.class);
+                intent.putExtra("desc", itemArrayList.get(position).getTitle());
+                intent.putExtra("place", itemArrayList.get(position).getPlace());
+                intent.putExtra("date", itemArrayList.get(position).getDate());
+                intent.putExtra("time", itemArrayList.get(position).getTime());
+                activity.setResult(11111, intent);
+                activity.startActivity(intent);
+            });
         }
     }
 }

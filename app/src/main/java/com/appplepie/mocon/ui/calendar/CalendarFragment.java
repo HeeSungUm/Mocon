@@ -53,7 +53,7 @@ public class CalendarFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
 
-        recyclerAdapter =new CalendarRemainderRecyclerAdapter(HomeFragment.todoItems);
+        recyclerAdapter =new CalendarRemainderRecyclerAdapter(HomeFragment.todoItems, getActivity());
         recyclerView.setAdapter(recyclerAdapter);
 
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
