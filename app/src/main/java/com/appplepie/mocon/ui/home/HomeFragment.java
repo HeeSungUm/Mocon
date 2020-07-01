@@ -166,7 +166,6 @@ public class HomeFragment extends Fragment {
         if (wifiPlaces != null && wifiPlaces.size()!=0) {
             for (int i = 0; i < wifiPlaces.size(); i++) {
                 for (int j = 0; j<wifiPlaces.get(i).wifi.size(); j++){
-                    Log.e("tag", "getPlaceBySSID: "+ wifiPlaces.size() + "i "+wifiPlaces.get(i).wifi.size() + "j "+ssid );
                     if (ssid.equals(wifiPlaces.get(i).wifi.get(j))){
                         return wifiPlaces.get(i).place;
                     }

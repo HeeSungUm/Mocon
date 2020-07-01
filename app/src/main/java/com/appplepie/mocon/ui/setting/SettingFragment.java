@@ -51,7 +51,7 @@ public class SettingFragment extends Fragment {
             ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
             WifiListRecyclerAdapter adapter = new WifiListRecyclerAdapter(wifiPlaces);
             recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+            Log.e(TAG, "onActivityResult: setttininiig" );
         }
     }
 
@@ -117,7 +117,7 @@ public class SettingFragment extends Fragment {
 
         addWifiPlace.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), WifiSetting.class);
-            getContext().startActivity(intent);
+            startActivityForResult(intent, 111);
         });
 
         return root;

@@ -50,7 +50,7 @@ public class NotificationService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "default");
 
 
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
 
 
         String channelName = "매일 알람 채널";
