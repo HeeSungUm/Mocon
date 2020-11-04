@@ -18,6 +18,16 @@ public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
 
+    int count = 10;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =

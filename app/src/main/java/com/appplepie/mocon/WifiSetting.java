@@ -69,7 +69,6 @@ public class WifiSetting extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         summitButton.setOnClickListener(view -> {
             if (editText.getText().toString().equals("") || spinner.getText().toString().equals("")) {
                 editText.setError("빈칸을 다 채워주세요");

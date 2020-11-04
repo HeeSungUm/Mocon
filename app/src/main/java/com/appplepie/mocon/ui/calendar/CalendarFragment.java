@@ -3,6 +3,7 @@ package com.appplepie.mocon.ui.calendar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.content.res.Resources;
 
 import android.os.Bundle;
@@ -17,10 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.appplepie.mocon.R;
+import com.appplepie.mocon.ui.todo.AddTodoActivity;
 import com.appplepie.mocon.ui.todo.TodoItem;
 import com.appplepie.mocon.ui.home.HomeFragment;
 
@@ -34,6 +38,7 @@ public class CalendarFragment extends Fragment {
     TextView emptyTextView;
     private CalendarRemainderRecyclerAdapter recyclerAdapter;
     ArrayList<TodoItem> items;
+    ImageButton addBtn;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,9 +47,9 @@ public class CalendarFragment extends Fragment {
         recyclerView = root.findViewById(R.id.calendarRecyclerView);
         calendarView = root.findViewById(R.id.calendarView);
         emptyTextView = root.findViewById(R.id.emptyTextView);
+        addBtn = root.findViewById(R.id.calendar_image_add_btn);
 
         emptyTextView.setText("");
-
 
         Resources resources = getResources();
         calendarView.setForwardButtonImage(ResourcesCompat.getDrawable(resources ,R.drawable.ic_baseline_navigate_next_24, null));
@@ -106,6 +111,12 @@ public class CalendarFragment extends Fragment {
             }
             recyclerAdapter.notifyDataSetChanged();
         });
+
+        addBtn.setOnClickListener(view->{
+            Intent intent = new Intent(getContext(), AddTodoActivity.class);
+            this.startActivityForResult(intent, 111);
+        });
+
 
 
 

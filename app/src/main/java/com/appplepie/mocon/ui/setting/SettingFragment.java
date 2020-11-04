@@ -48,6 +48,7 @@ public class SettingFragment extends Fragment {
             Gson gson = new Gson();
             String json = preferences.getString("WifiPlaceList", "");
             Type type = new TypeToken<ArrayList<WifiPlace>>(){}.getType();
+            Log.e("setting",json);
             ArrayList<WifiPlace> wifiPlaces = gson.fromJson(json, type);
             WifiListRecyclerAdapter adapter = new WifiListRecyclerAdapter(wifiPlaces);
             recyclerView.setAdapter(adapter);

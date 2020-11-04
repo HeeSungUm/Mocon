@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        getContext().registerReceiver(mReceiver, filter);
+        getContext().registerReceiver(  mReceiver, filter);
 
 
         addTodo.setOnClickListener(view -> {
